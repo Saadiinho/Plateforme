@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card" style="width: 28rem; margin-top: 3rem;">
+      <img src="/media/images/photo_profil.jpeg" class="card-img-top" alt="...">
+      <div class="card-body d-flex flex-column align-items-center">
+        <h5 class="card-title text-center">Vos informations</h5>
+         <div class="row mt-3">
+          <form action="" method="post">
+            {% csrf_token %}
+            <p>
+              Nouveau pseudo :<br>
+              <input type="text" name="pseudo" class="mb-2">
+              <!-- Ajoutez le code suivant pour afficher un message d'erreur -->
+              {% if error %}
+                <p class="text-danger">{{ error }}</p>
+              {% endif %}
+            </p>
+            <p>
+              Nouveau prénom :<br>
+              <input type="text" name="first_name" class="mb-2"> 
+            </p>
+            <p>
+              Nouveau nom :<br>
+              <input type="text" name="last_name" class="mb-2">
+            </p>
+            <p>
+              Nouveau mail :<br>
+              <input type="email" placeholder="xyz@exemple.com" name="email" class="mb-2"> 
+            </p>
+            <button type="submit" class="btn btn-outline-primary mb-3 mt-2" name="login">Modifier</button>
+          </form>
+          <a href="{% url 'my-account' %}" class="btn btn-outline-danger">Retour</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

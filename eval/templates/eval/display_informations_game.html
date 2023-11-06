@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-center">
+    <div class="card shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="width: 32rem; margin-top: 2rem;">
+        <img src="{{ game.image.url }}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h1 class="text-center">{{ game.name }}</h1>
+            <p class="card-text">Description : {{ game.description }}</p>
+            <p class="card-text">Plateforme : {{ game.platform }}</p>
+            <p class="card-text">Genre : {{ game.genre }}</p>
+            <p class="card-text">Editeur : {{ game.publisher }}</p>
+            <p class="card-text">Année de sortie : {{ game.year_of_Release }}</p>
+            <p class="card-text">Nombre de jetons : {{ game.coins }}</p>
+            <a href="{% url 'write_review' %}" class="btn btn-outline-success">Ecrire une évaluation</a>
+            <a href="{% url 'add-coins' %}" class="btn btn-outline-primary">Placer des jetons</a>
+            <a href="{% url 'display-games' %}" class="btn btn-outline-danger">Retour</a>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h1>Les évaluations de {{ game.name }}</h1>
+    <div class="row">
+        <p>
+            Nombre d'évaluations : {{ count }} <br>
+            Note moyenne : {{ score }} / 5
+        </p>
+        <hr>
+    </div>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Utilisateur</th>
+            <th scope="col">Note </th>
+            <th scope="col">Evaluation</th>
+            {% if user.role == 'ADMINISTRATOR' %}
+            <th scope="col">
+              <form action="" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger">
+                  Supprimer
+                </button>
+              </form>
+            </th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+        {% for review in reviews %}
+        {% if review.game.name == game.name %}
+          <tr>
+            <th scope="row">{{ review.id }}</th>
+            <td>{{ review.user.username }}</td>
+            <td> {{ review.score }} / 5</td>
+            <td> {{ review.comment }} </td>
+            {% if user.role == 'ADMINISTRATOR' %}
+            <td>
+              
+                {% if confirmation %}
+                <form action="" method="POST">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger" name="{{ review.id }}">
+                    Supprimer
+                  </button>
+                </form>
+                {% endif %}
+            </td>
+            {% endif %}
+          </tr>
+        </tbody>
+            {% endif %}
+        {% endfor %}
+      </table>
+</div>
+{% endblock %}

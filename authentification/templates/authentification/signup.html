@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
+    {% if form.errors %}
+    {{ form.errors }}
+    {% endif %}
+    <form method="post">
+        <h1>Inscription</h1> <br>
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">S’inscrire</button>
+        <a href="{% url 'login' %}" class="btn btn-outline-danger">Retour</a>
+    </form>
+</div>
+{% endblock content %}

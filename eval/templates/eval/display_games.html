@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="m-5">
+    <h1>Liste de nos jeux </h1>
+    <div class="row">
+        <form action="" method="post">
+          {% csrf_token %}
+          <div class="row mb-2">
+              <h5>Trier par :</h5>
+              <div class="col-12 col-md-3 mt-3">
+                  <select class="form-select" name="coins" aria-label="Default select example">
+                      <option selected>Nombre de jetons</option>
+                      <option value="1">Du - au +</option>
+                      <option value="2">Du + au -</option>
+                  </select>
+              </div>
+              <div class="col-12 col-md-3 mt-3">
+                  <select class="form-select" name="date" aria-label="Default select example">
+                      <option selected>Année de sortie</option>
+                      <option value="1">Du plus ancien au plus récent</option>
+                      <option value="2">Du plus récent au plus ancien</option>
+                  </select>
+              </div>
+              <div class="col-12 col-md-3 mt-3">
+                  <button class="btn btn-outline-success" type="submit">Filtrer</button>
+              </div>
+          </div>
+      </form>
+        <form class="d-flex mb-4" role="search">
+          <input class="form-control me-2" type="search" placeholder="Rechercher" aria-label="Search" name="search">
+          <button class="btn btn-outline-success" type="submit">Rechercher</button>
+        </form>
+        {% for game in games %}
+        <div class="col-12 col-md-3 col-sd-6 mb-5 d-flex flex-column justify-content-between">
+            <div class="card" style="width: 18rem; height: 350px;">
+              <div class="card-body">
+                <h5 class="card-title text-primary text-center">{{ game.name }}</h5>
+                <p class="card-text">
+                  {{ game.description }}
+                </p>
+              </div>
+              <div class="card-footer d-flex justify-content-center">
+                <a href="{% url 'informations'  game.id  %}" class="btn btn-primary">Plus de détails</a>
+              </div>
+            </div>
+          </div>
+          
+        {% endfor %}
+    </div>
+    <div class="row mt-3">
+            <div class="col-md-3 offset-md-4">
+                <ul class="pagination">
+                    {% if games.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link text-dark" href="?page= {{ games.previous_page_number }}">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                    {% endif %}
+                        <li class="page-item active">
+                            <li class="page-item">
+                                <a class="page-link text-dark" href="?page={{ games.number}}">{{ games.number}}</a>
+                            </li>
+                        </li>
+                    {% if games.has_next %}
+                        <li class="page-item">
+                            <a class="page-link text-dark" href="?page={{ games.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+</div>
+{% endblock %}

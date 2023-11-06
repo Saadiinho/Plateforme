@@ -1,0 +1,13 @@
+{
+    "builds": [{
+        "src": "evalJeu/wsgi.py",
+        "use": "@vercel/python",
+        "config": {"maxLamdbaSize": "15mb", "runtime": "python3.9"}
+    }],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "evalJeu/wsgi.py"
+        }
+    ]
+}

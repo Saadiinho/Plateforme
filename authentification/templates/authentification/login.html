@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content  %}
+    <p>{{ message }}</p>
+    
+    <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="card" style="width: 18rem;">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title text-center">Se connecter</h5>
+            <form action="" method="post">
+                <div class="row">
+                    <p>Nom d'utilisateur : </p>
+                    {{ form.username }}
+                    <p class="mt-3">Mot de passe :</p>
+                    {{ form.password }}
+                    <p><a href="{% url 'signup' %}">Je n'ai pas encore de compte</a></p>
+                    <p><a href="#">Mot de passe oublié</a></p>
+                </div>
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary mt-3" name="login">Se connecter</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+{% endblock content %}

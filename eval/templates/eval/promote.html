@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.role == 'ADMINISTRATOR' %}
+<div class="container mt-5">
+    <h1>Listes des utilisateurs</h1>
+    <div class="row bg-light justify-content-between text-center" style="width: 100%;">
+        <div class="col">
+            <p class="badge bg-secondary rounded-pill">Pseudo</p>
+        </div>
+        <div class="col">
+            <p class="badge bg-primary rounded-pill">Rôle</p>
+        </div>
+        <div class="col">
+            <p class="badge bg-success rounded-pill">Promotion</p>
+        </div>
+    </div>
+    {% for user in users %}
+    <div class="row bg-light justify-content-between text-center" style="width: 100%;">
+        <div class="col">
+            <p >{{ user.username }}</p>
+        </div>
+        <div class="col">
+            <p class="text-primary">{{ user.role }}</p>
+        </div>
+        <div class="col">
+            {% if user.role == 'ADMINISTRATOR' %}
+            <a href="" class="nav-link disabled" style="text-decoration: none;">Pas de promotion displonible</a>
+            {% else %}
+            <a href="{% url 'change-user-role' user.id %}" class="text-success" style="text-decoration: none;">Promouvoir</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="container mt-5">
+    <h1>Vous n'avez pas accès à cette page !</h1>
+</div>
+{% endif %}
+{% endblock %}

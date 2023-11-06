@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card" style="width: 28rem; margin-top: 10rem;">
+      <img src="/media/images/photo_profil.jpeg" class="card-img-top" alt="Profil">
+      <div class="card-body d-flex flex-column align-items-center">
+        <h5 class="card-title text-center">Bienvenue {{ user.username }}</h5>
+         <div class="row mt-3">
+          <a href="{% url 'informations' %}" class="btn btn-outline-primary mb-3">Voir mes informations</a>
+          <a href="{% url 'update' %}" class="btn btn-outline-primary mb-3">Modifier mes informations</a>
+          <a href="{% url 'change_password' %}" class="btn btn-outline-primary mb-3">Modifier mon mot de passe</a>
+          {% if user.username == 'admin' %}
+            <a href="{% url 'promote' %}" class="btn btn-outline-primary mb-3">Promouvoir un utilisateur</a>
+          {% endif %}
+          <a href="{% url 'logout' %}" class="btn btn-outline-danger mb-3">Se déconnecter</a>
+          <a href="{% url 'delete' %}" class="btn btn-danger">Supprimer mon compte</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+{% endblock %}
